@@ -9,10 +9,24 @@
     </head>
 
     <body>
-        <nav class="Header">
+        <div class="Header">
+            <h1>Weather Dashboard</h1>
+        </div>
+        <article class = "searcher">
+            <div class ="search-wrapper">
+                <input type="search" id="search" data-search>
+                <label for="search">Search</label>
+            </div>
+            <template data-user-template>
+            <div class = "city-cards" data-city-card-container>
+                <div class = "card">
+                    <div class ="saved-cards" data-body></div>
+                </div>
+            </div>
+            </template>
+        </article>
 
-        </nav>
-        <article class = "search"></article>
+        </article>
         <script src="./Assets/js/script.js"> </script>
     </body>
 

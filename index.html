@@ -16,9 +16,16 @@
             <div class="column">
                 <h2>Search for a City:</h2>
                 <div class ="search-wrapper">
-                    <input type="search" id="search" data-search>
-                    <label for="search">Search</label>
+                    <input type="search" id="search" placeholder="Search City...">
+                    <label for="search" button onclick="search()">Search</label>
                 </div>
+                <template data-user-template>
+                    <div class = "city-cards" data-city-card-container>
+                        <div class = "card">
+                            <div class ="saved-cards" data-body></div>
+                        </div>
+                    </div>
+                </template>
             </div>
             <div class="column-middle">
                 <h3>Results</h3>
@@ -26,14 +33,7 @@
                     <h4>forecast</h4>
                 </div>
             </div>
-            <template data-user-template>
-            <div class = "city-cards" data-city-card-container>
-                <div class = "card">
-                    <div class ="saved-cards" data-body></div>
-                </div>
-            </div>
             
-            </template>
             
         </section>
         <aside class ="info">

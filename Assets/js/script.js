@@ -8,27 +8,24 @@ const urlWeb = "https://api.openweathermap.org"
 const cityCardTemplate = document.querySelector("[data-city-template]");
 const cityCardContainer = document.querySelector("[data-city-cards-container]");
 const searchInput = document.querySelector("[data-search]");
-const searchBarInput = document.querySelector(".search");
+const searchBarInput = document.querySelector("#search");
 const searchCity = document.querySelector("city");
 
 let cities = [];
-
-searchInput.addEventListener("input", (searchBarInput));
-const value = searchBarInput.target.value.toLowerCCase();
-cities.forEach(city => {
-    const isVisible = city.name.toLowerCase.includes(value)
-    city.element.classList.toggle("hide", !isVisible)
-})
-console.log(cities);
-
 //Add variable to the search bar
-function searchBar() {
-    if 
+function search() {
+
+
+    if ()
+})
 //Search results for city or city not found
 
 
     
-fetch(urlWeb);
+
+
+
+function fetch(urlWeb);
     .then (res => res.json())
     .then(data => {
         city = data.map(city => {

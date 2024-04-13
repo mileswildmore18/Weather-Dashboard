@@ -9,13 +9,22 @@
     </head>
 
     <body>
-        <div class="Header">
+        <div class="header">
             <h1>Weather Dashboard</h1>
         </div>
-        <article class = "searcher">
-            <div class ="search-wrapper">
-                <input type="search" id="search" data-search>
-                <label for="search">Search</label>
+        <section class = "searcher">
+            <div class="column">
+                <h2>Search for a City:</h2>
+                <div class ="search-wrapper">
+                    <input type="search" id="search" data-search>
+                    <label for="search">Search</label>
+                </div>
+            </div>
+            <div class="column-middle">
+                <h3>Results</h3>
+                <div class = "forecast">
+                    <h4>forecast</h4>
+                </div>
             </div>
             <template data-user-template>
             <div class = "city-cards" data-city-card-container>
@@ -23,10 +32,15 @@
                     <div class ="saved-cards" data-body></div>
                 </div>
             </div>
+            
             </template>
-        </article>
+            
+        </section>
+        <aside class ="info">
+            
+            </div>
+        </aside>
 
-        </article>
         <script src="./Assets/js/script.js"> </script>
     </body>
 

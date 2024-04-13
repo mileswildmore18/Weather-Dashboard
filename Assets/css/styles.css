@@ -1,26 +1,74 @@
 * {
-    display:flex;
-    margin: 0;
-    padding: 0;
+    box-sizing: border-box;
 }
-
 .header {
     display:flex;
+    flex-direction: column;
     background-color:darkblue;
     color: white;
     justify-content: center;
+    align-items: center;
+    
 }
 
 h1 {
+    display:flex;
     font-weight:bold;
-    font-size:large;
     font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+}
+
+.searcher {
+    display: flex;
+    flex-direction:row;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    height:600px;
+}
+/*  */
+.column-middle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-style: solid;
+    width: 75%;
+}
+
+.forecast {
+    display: flex;
+    flex-direction:column;
+    height: 60%;
+}
+#search {
+    height:40px;
+    width:300px;
+}
+
+label {
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    height:40px;
+    width:300px;
+}
+h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:35px;
+    padding-bottom:5px;
+    justify-content: center;
 }
 
 .search-wrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction:column;
+    align-items: flex-start;
     gap: .25rem;
+
 }
 
 input {
@@ -28,8 +76,10 @@ input {
 }
 
 label {
-    background-color: rgb(100, 165, 190);
+    background-color: rgb(0, 104, 145);
     color: white;
+    font-size:20px;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 .city-cards {
@@ -45,4 +95,10 @@ label {
 
 .hide {
     display:none;
+}
+/* Have the box on the right side of the section */
+.info {
+    display:flex;
+    flex-direction: row;
+    
 }

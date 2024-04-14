@@ -118,7 +118,7 @@ function displayForecast(data) {
         const iconPath = data.list[0].weather[0].icon;
         const icon = weatherIcon(iconPath)
 
-        cityDateEl.textcontent = `${date}`;
+        cityDateEl.textContent = `${date}`;
         iconEl.textContent = icon;
         const cityTemp = (data.list[i].main.temp - 273.15) * (9 / 5) + 32;
         cityTempEl.textContent = ` Temp: ${cityTemp.toFixed(2)} F `;
@@ -143,19 +143,19 @@ const forecastDate = function (i) {
 const weatherIcon = function (weatherIcon) {
     
     if (weatherIcon === '03d' || weatherIcon === '03n' || weatherIcon === '04d' || weatherIcon === '04n') {
-        return 'cloudy'
+        return '⛅'
     } else if (weatherIcon === '01d' || weatherIcon === '02d') {
-        return 'sunny'
+        return '🌅'
     } else if (weatherIcon === '01n' || weatherIcon === '02n') {
-        return 'night'
+        return '🌃'
     } else if (weatherIcon === '10d' || weatherIcon === '10n' || weatherIcon === '09d' || weatherIcon === '09n') {
-        return 'raining'
+        return '☔'
     } else if (weatherIcon === '11n' || weatherIcon === '11d') {
-        return 'night rain'
+        return '🌧'
     } else if (weatherIcon === '13n' || weatherIcon === '13d') {
-        return 'cold'
+        return '🌡'
     } else if (weatherIcon === '50n' || weatherIcon === '50d') {
-        return 'snowing'
+        return '❆'
     } else {
         return '?'
     }

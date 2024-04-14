@@ -16,22 +16,22 @@
             <div class="column">
                 <h2>Search for a City:</h2>
                 <div class ="search-wrapper">
-                    <input type="search" id="search" placeholder="Search City...">
-                    <label for="search" button onclick="search()">Search</label>
+                    <input type="text" id="search" placeholder="Search City...">
+                    <label for="search" onclick="formSubmitHandler()">Search</label>
                     <div id="results"></div>
                 </div>
-                <template data-user-template>
-                    <div class = "city-cards" data-city-card-container>
-                        <div class = "card">
-                            <div class ="saved-cards" data-body></div>
-                        </div>
-                    </div>
-                </template>
             </div>
             <div class="column-middle">
-                <h3>Results</h3>
+                <div id="weatherForecast">
+                    <p id="location"></p>
+                    <p id="temperature"></p>
+                    <p id="weatherDescription"></p>
+                </div>
                 <div class = "forecast">
-                    <h4>forecast</h4>
+                    <div id="weatherForecast"> 
+                        <h2>5-Day Weather Forecast</h2>                       
+                        <div id="forecastContainer"></div>
+                    </div>     
                 </div>
             </div>
             

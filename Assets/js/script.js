@@ -7,122 +7,130 @@ let apiKey = "6e186993d5c7985aedd789da8065fa4d";
 let city;
 let weatherElement = document.getElementById('currentWeather')
 const searchInput = document.getElementById('search');
+let forecastContainer = document.getElementById('forecastContainer')
 
 const formSubmitHandler = function (event) {
     const city = searchInput.value
 
     if (city) {
         search(city);
-
+        
         searchInput.value = ''
     } else {
-            alert('Please enter city')
-        }
-    };
+        alert('Please enter city')
+    }
+};
 
 
-     
+
 
 //Add variable to the search bar, call API and retrieve data
 
 function search(city) {
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+    
     //fetch api
     fetch(apiUrl)
-    .then(function (response) {
-        //check to see that the city was found
-        if (response.ok) {
-            // clearDiv();
-            // subtitleDisplay();
-            // pastCitiesArrayHandler(city);
-            // localStorage.setItem('cities',(JSON.stringify(pastCities)))
-            // searchList();
-            //parse the data
-            response.json()
-                .then(function (data) {
-                    console.log(data)
-                    displayWeather(data)
-                    get5DayForecast(city)
-                    //send the data to the display function
-                    //displayWeather(data)
-                    //forecastSearch(city)
-                })
-        } else {
-            //send error alert if response failed
-            alert(`Error: ${response.status.statusText}`);
-        }
-    })
-}   //Display the weather forecast and gather information about the city
+        .then(function (response) {
+            //check to see that the city was found
+            if (response.ok) {
+                // clearDiv();
+                // subtitleDisplay();
+                // pastCitiesArrayHandler(city);
+                // localStorage.setItem('cities',(JSON.stringify(pastCities)))
+                // searchList();
+                //parse the data
+                response.json()
+                    .then(function (data) {
+                        console.log(data)
+                        displayWeather(data)
+                        get5DayForecast(city)
+                        //send the data to the display function
+                        //displayWeather(data)
+                        //forecastSearch(city)
+                    })
+            } else {
+                //send error alert if response failed
+                alert(`Error: ${response.status.statusText}`);
+            }
+        })
+}   
+//Display the weather forecast and gather information about the city
 
-    const displayWeather = function (data) {
-        const cityNameEl = document.createElement('h2');
-        const cityTempEl = document.createElement('h3');
-        const cityWindEl = document.createElement('h3');
-        const cityHumidityEl = document.createElement('h3');
-        //const date = dayjs().format('MM/DD/YYYY');
-        const icon = weatherIcon(data);
+const displayWeather = function (data) {
+    const cityNameEl = document.createElement('h2');
+    const cityTempEl = document.createElement('h3');
+    const cityWindEl = document.createElement('h3');
+    const cityHumidityEl = document.createElement('h3');
+    const date = dayjs().format('MM/DD/YYYY');
+    console.log(data)
+    const iconPath = data.weather[0].icon;
+    const icon = weatherIcon(iconPath);
 
-        cityNameEl.textContent = `${data.name} ${data} ${icon}`;
-        const cityTemp = (data.main.temp - 273.15) * (9 / 5) + 32;
-        cityTempEl.textContent = `Temp: ${cityTemp.toFixed(2)} F`;
-        cityWindEl.textContent = `Wind: ${data.wind.speed} MPH`;
-        cityHumidityEl.textContent = `Humidity ${data.main.humidity} %`;
+    cityNameEl.textContent = `${data.name} (${date}) ${icon} `;
+    const cityTemp = (data.main.temp - 273.15) * (9 / 5) + 32;
+    cityTempEl.textContent = `Temp: ${cityTemp.toFixed(2)} F `;
+    cityWindEl.textContent = `Wind: ${data.wind.speed} MPH `;
+    cityHumidityEl.textContent = `Humidity ${data.main.humidity} % `;
 
-        weatherElement.appendChild(cityNameEl);
-        weatherElement.appendChild(cityTempEl);
-        weatherElement.appendChild(cityWindEl);
-        weatherElement.appendChild(cityHumidityEl);
-        
-    }
+    weatherElement.appendChild(cityNameEl);
+    weatherElement.appendChild(cityTempEl);
+    weatherElement.appendChild(cityWindEl);
+    weatherElement.appendChild(cityHumidityEl);
+    
+}
 
-    const forecastSearch = function(city) {
-        const queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
+const forecastSearch = function (city) {
+    const queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
 
-        fetch(queryURL)
+    fetch(queryURL)
         .then(function (response) {
             //check for response if it returned successfully
             if (response.ok) {
-            response.json()
-                .then(function (data) {
-                console.log(data)
-                //sends the data to the display function
-                displayForecast(data)
-            })
-        } else {
-            //send an error alert if response has failed
-            alert(`Error: ${response.statusText}`);
-        }
-    })
-        
+                //parse the data
+                response.json()
+                    .then(function (data) {
+                        console.log(data)
+                        //sends the data to the display function
+                        displayForecast(data)
+                    })
+            } else {
+                //send an error alert if response has failed
+                alert(`Error: ${response.statusText}`);
+            }
+        })
+
 }
 
-function displayForecast (data){
-    for (let i = 1; 1 <= 5; i++) {
-        const forecastCard = document.createElement ('div')
+function displayForecast(data) {
+    for (let i = 1; i <= 5; i++) {
+        const forecastCard = document.createElement('div')
         forecastCard.setAttribute('id', 'card')
-        
-        const cityDateEl = document.createElement('h4')
-        const iconEl = document.createElement ('h5')
-        const cityTempEl = document.createElement ('h5')
-        const cityWindEl = document.createElement ('h5')
-        const cityHumidityEl = document.createElement ('h5')
 
+        const cityDateEl = document.createElement('h4')
+        const iconEl = document.createElement('h5')
+        const cityTempEl = document.createElement('h5')
+        const cityWindEl = document.createElement('h5')
+        const cityHumidityEl = document.createElement('h5')
+//display the date
         const date = forecastDate(i)
-        const icon = forecastIcon(date, i)
+        console.log(data)
+        const iconPath = data.list[0].weather[0].icon;
+        const icon = weatherIcon(iconPath)
 
         cityDateEl.textcontent = `${date}`;
         iconEl.textContent = icon;
         const cityTemp = (data.list[i].main.temp - 273.15) * (9 / 5) + 32;
-        cityTempEl.textContent = `Temp: ${cityTemp.toFixed(2)} F`;
-        cityWindEl.textContent = `Wind: ${data.list[i].wind.speed} MPH`;
-        cityHumidityEl.textContent = `Humidity ${data.list[i].main.humidity}%`;
+        cityTempEl.textContent = ` Temp: ${cityTemp.toFixed(2)} F `;
+        cityWindEl.textContent = ` Wind: ${data.list[i].wind.speed} MPH `;
+        cityHumidityEl.textContent = ` Humidity ${data.list[i].main.humidity}% `;
 
         forecastCard.appendChild(cityDateEl);
         forecastCard.appendChild(iconEl);
         forecastCard.appendChild(cityTempEl);
         forecastCard.appendChild(cityWindEl);
         forecastCard.appendChild(cityHumidityEl);
-        forecastElement.appendChild(forecastCard);
+        forecastContainer.appendChild(forecastCard);
     }
 }
 
@@ -132,13 +140,26 @@ const forecastDate = function (i) {
     return forecastDay;
 }
 
-const weatherIcon = function (data) {
-    if (data.weather[0].icon === '03d' || data.weather[0].icon === '03n' || data.weather[0].icon === '04d' || data.weather[0].icon === '04n');
-    return ''
+const weatherIcon = function (weatherIcon) {
+    
+    if (weatherIcon === '03d' || weatherIcon === '03n' || weatherIcon === '04d' || weatherIcon === '04n') {
+        return 'cloudy'
+    } else if (weatherIcon === '01d' || weatherIcon === '02d') {
+        return 'sunny'
+    } else if (weatherIcon === '01n' || weatherIcon === '02n') {
+        return 'night'
+    } else if (weatherIcon === '10d' || weatherIcon === '10n' || weatherIcon === '09d' || weatherIcon === '09n') {
+        return 'raining'
+    } else if (weatherIcon === '11n' || weatherIcon === '11d') {
+        return 'night rain'
+    } else if (weatherIcon === '13n' || weatherIcon === '13d') {
+        return 'cold'
+    } else if (weatherIcon === '50n' || weatherIcon === '50d') {
+        return 'snowing'
+    } else {
+        return '?'
+    }
 }
-
-
-
 
 function get5DayForecast(city) {
     let apiUrls = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
@@ -146,18 +167,19 @@ function get5DayForecast(city) {
         .then(function (response) {
             if (response.ok) {
                 response.json()
-                .then(function (data) {
-                    console.log(data)})
-                    displayForecast(data)
-                 } else {
+                    .then(function (data) {
+                        console.log(data)
+                        displayForecast(data)
+                    })                
+            } else {
                 //send error alert if response failed
                 alert(`Error: ${response.status.statusText}`);
             }
         });
-    }
+}
 
 
-            // Extract relevant weather information for the next 5 days
+// Extract relevant weather information for the next 5 days
 //             const forecasts = data.list.filter((forecast, index) => index % 8 === 0); // Get forecasts for every 8th element (5-day forecast)
 
 //             // Update HTML elements with weather information
@@ -176,7 +198,7 @@ function get5DayForecast(city) {
 //                     <p>Weather: ${weatherDescription}</p>
 //                 `;
 //                 forecastContainer.appendChild(forecastElement);
-                
+
 //             });
 //         })
 //         .catch(error => {
@@ -192,13 +214,13 @@ const clearDiv = function () {
     weatherElement.innerHTML = ''
     forecastElement.innerHTML = ''
 }
-    
-const searchHistory = function() {
+
+const searchHistory = function () {
     searchHistoryElement.innerHTML = ''
 }
 
 
-    
+
 
 
 

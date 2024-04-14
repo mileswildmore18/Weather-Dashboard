@@ -1,6 +1,7 @@
 * {
     box-sizing: border-box;
 }
+
 .header {
     display:flex;
     flex-direction: column;
@@ -46,7 +47,6 @@ h5 {
 .column-middle {
     display: flex;
     flex-direction: column;
-    align-items: center;
     border-style: solid;
     width: 75%;
 }
@@ -57,17 +57,19 @@ h5 {
     height: 60%;
 }
 
-#forcastContainer{
+#forecastContainer{
     display:flex;
     flex-direction: row;
     justify-content: space-between;
 }
+/* Properties of the cards for the 5 day forecast */
 #card {
     display:flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     margin: 30px;
+    width:20%;
     background-color: rgb(16, 66, 61);
     color: whitesmoke;
 }
@@ -80,7 +82,6 @@ h5 {
 #currentWeather {
     display: flex;
     flex-direction: column;
-    align-items:flex;
 }
 
 label {

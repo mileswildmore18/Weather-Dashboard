@@ -102,7 +102,7 @@ const forecastSearch = function (city) {
 }
 //Show the information of the forecast in the specific city
 function displayForecast(data) {
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 0; i <= 4; i++) {
         const forecastCard = document.createElement('div')
         forecastCard.setAttribute('id', 'card')
 
@@ -135,7 +135,7 @@ function displayForecast(data) {
 //Provides today's date 
 const forecastDate = function (i) {
     let today = dayjs();
-    let forecastDay = today.add(i, 'day').format('MM/DD/YYYY');
+    let forecastDay = today.add(i + 1, 'day').format('MM/DD/YYYY');
     return forecastDay;
 }
 //Providing specific weather icons for the weather condition in the specific city

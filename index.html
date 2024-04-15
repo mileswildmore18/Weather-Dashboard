@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="./Assets/css/styles.css">
-        <title>Weather Dashboard</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./Assets/css/styles.css">
+    <title>Weather Dashboard</title>
+</head>
 
-    <body>
-        <div class="header">
-            <h1>Weather Dashboard</h1>
+<body>
+    <div class="header">
+        <h1>Weather Dashboard</h1>
+    </div>
+    <section class="searcher">
+        <div class="column">
+            <h2>Search for a City:</h2>
+            <div class="search-wrapper">
+                <input type="text" id="search" placeholder="Search City...">
+                <label for="search" onclick="formSubmitHandler()">Search</label>
+                <div id="results"></div>
+            </div>
+            <ul id="searchHistory"></ul>
         </div>
-        <section class = "searcher">
-            <div class="column">
-                <h2>Search for a City:</h2>
-                <div class ="search-wrapper">
-                    <input type="text" id="search" placeholder="Search City...">
-                    <label for="search" onclick="formSubmitHandler()">Search</label>
-                    <div id="results"></div>    
-                </div>
-                <ul id="searchHistory"></ul>
+        <div class="column-middle">
+            <div id="weatherForecast">
+                <div id="currentWeather"></div>
             </div>
-            <div class="column-middle">
+            <div class="forecast">
+                <h2>5 Day Forecast:</h2>
                 <div id="weatherForecast">
-                    <div id = "currentWeather"></div>
-                </div>
-                <div class = "forecast">
-                    <h2>5 Day Forecast:</h2>
-                    <div id="weatherForecast"> 
-                                               
-                        <div id="forecastContainer"></div>
-                    </div>     
+
+                    <div id="forecastContainer"></div>
                 </div>
             </div>
-            
-            
-        </section>
-        <aside class ="info">
-            
-            </div>
-        </aside>
-        <script src ="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
-        <script src="./Assets/js/script.js"> </script>
-    </body>
+        </div>
+
+
+    </section>
+    <aside class="info">
+
+        </div>
+    </aside>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js"></script>
+    <script src="./Assets/js/script.js"> </script>
+</body>
 
 </html>

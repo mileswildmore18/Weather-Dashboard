@@ -16,7 +16,7 @@ const formSubmitHandler = function (event) {
 
     if (city) {
         search(city);
-        
+
         searchInput.value = ''
     } else {
         //Alert in case nothing is put in when the search button is clicked.
@@ -31,7 +31,7 @@ const formSubmitHandler = function (event) {
 
 function search(city) {
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-    
+
     //fetch api
     fetch(apiUrl)
         .then(function (response) {
@@ -39,7 +39,7 @@ function search(city) {
             if (response.ok) {
                 clearDiv();
                 pastCitiesArrayHandler(city);
-                localStorage.setItem('cities',(JSON.stringify(pastCities)))
+                localStorage.setItem('cities', (JSON.stringify(pastCities)))
                 searchHistory()
                 //parse the data
                 response.json()
@@ -53,7 +53,7 @@ function search(city) {
                 alert(`Error: ${response.status.statusText}`);
             }
         })
-}   
+}
 //Display the weather forecast and gather information about the city
 
 const displayWeather = function (data) {
@@ -76,7 +76,7 @@ const displayWeather = function (data) {
     weatherElement.appendChild(cityTempEl);
     weatherElement.appendChild(cityWindEl);
     weatherElement.appendChild(cityHumidityEl);
-    
+
 }
 //Fetching response from the website while searching from the targeted website
 const forecastSearch = function (city) {
@@ -111,19 +111,19 @@ function displayForecast(data) {
         const cityTempEl = document.createElement('h5')
         const cityWindEl = document.createElement('h5')
         const cityHumidityEl = document.createElement('h5')
-//display the date
+        //display the date
         const date = forecastDate(i)
         console.log(data)
         const iconPath = data.list[0].weather[0].icon;
         const icon = weatherIcon(iconPath)
-//Adding the temperature, wind speed and humidity from the searched city
+        //Adding the temperature, wind speed and humidity from the searched city
         cityDateEl.textContent = `${date}`;
         iconEl.textContent = icon;
         const cityTemp = (data.list[i].main.temp - 273.15) * (9 / 5) + 32;
         cityTempEl.textContent = ` Temp: ${cityTemp.toFixed(2)} F `;
         cityWindEl.textContent = ` Wind: ${data.list[i].wind.speed} MPH `;
         cityHumidityEl.textContent = ` Humidity ${data.list[i].main.humidity}% `;
-//Adding information into a list
+        //Adding information into a list
         forecastCard.appendChild(cityDateEl);
         forecastCard.appendChild(iconEl);
         forecastCard.appendChild(cityTempEl);
@@ -140,7 +140,7 @@ const forecastDate = function (i) {
 }
 //Providing specific weather icons for the weather condition in the specific city
 const weatherIcon = function (weatherIcon) {
-    
+
     if (weatherIcon === '03d' || weatherIcon === '03n' || weatherIcon === '04d' || weatherIcon === '04n') {
         return '⛅'
     } else if (weatherIcon === '01d' || weatherIcon === '02d') {
@@ -169,7 +169,7 @@ function get5DayForecast(city) {
                     .then(function (data) {
                         console.log(data)
                         displayForecast(data)
-                    })                
+                    })
             } else {
                 //send error alert if response failed
                 alert(`Error: ${response.status.statusText}`);
@@ -178,10 +178,10 @@ function get5DayForecast(city) {
 }
 
 //Adding past cities from previous searches
-const pastCitiesArrayHandler = function(city){
-    if (pastCities.includes(city)){
+const pastCitiesArrayHandler = function (city) {
+    if (pastCities.includes(city)) {
         return
-    } else{
+    } else {
         pastCities.push(city)
     }
 }
@@ -192,14 +192,15 @@ const clearDiv = function () {
 }
 // Adding searched cities into the history
 const searchHistory = function () {
-    console.log ('History')
+    console.log('History')
     cityHistory.innerHTML = '';
-    for(const city of pastCities) {
-    historyCard = document.createElement('button')
-    historyCard.textContent = city
-    historyCard.setAttribute('id', 'searchCard')
-    historyCard.setAttribute('data-content', city)
-    cityHistory.appendChild(historyCard)}
+    for (const city of pastCities) {
+        historyCard = document.createElement('button')
+        historyCard.textContent = city
+        historyCard.setAttribute('id', 'searchCard')
+        historyCard.setAttribute('data-content', city)
+        cityHistory.appendChild(historyCard)
+    }
 }
 //Calls the history of past searched cities
 searchHistory();

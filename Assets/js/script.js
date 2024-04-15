@@ -30,6 +30,7 @@ const formSubmitHandler = function (event) {
 //Add variable to the search bar, call API and retrieve data
 
 function search(city) {
+    console.log(city);
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
 
     //fetch api
@@ -44,7 +45,7 @@ function search(city) {
                 //parse the data
                 response.json()
                     .then(function (data) {
-                        console.log(data)
+                        //console.log(data)
                         displayWeather(data)
                         get5DayForecast(city)
                     })
@@ -57,12 +58,13 @@ function search(city) {
 //Display the weather forecast and gather information about the city
 
 const displayWeather = function (data) {
+    weatherElement.innerHTML = ''
     const cityNameEl = document.createElement('h2');
     const cityTempEl = document.createElement('h3');
     const cityWindEl = document.createElement('h3');
     const cityHumidityEl = document.createElement('h3');
     const date = dayjs().format('MM/DD/YYYY');
-    console.log(data)
+    //console.log(data)
     const iconPath = data.weather[0].icon;
     const icon = weatherIcon(iconPath);
 
@@ -79,30 +81,13 @@ const displayWeather = function (data) {
 
 }
 //Fetching response from the website while searching from the targeted website
-const forecastSearch = function (city) {
-    const queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
-
-    fetch(queryURL)
-        .then(function (response) {
-            //check for response if it returned successfully
-            if (response.ok) {
-                //parse the data
-                response.json()
-                    .then(function (data) {
-                        console.log(data)
-                        //sends the data to the display function
-                        displayForecast(data)
-                    })
-            } else {
-                //send an error alert if response has failed
-                alert(`Error: ${response.statusText}`);
-            }
-        })
-
-}
+// 
 //Show the information of the forecast in the specific city
 function displayForecast(data) {
-    for (let i = 0; i <= 4; i++) {
+    
+    let filterData = data.list.filter(day=>day.dt_txt.includes('12:00:00'))
+     forecastContainer.innerHTML = ''
+    for (let i = 0; i < filterData.length; i++) {
         const forecastCard = document.createElement('div')
         forecastCard.setAttribute('id', 'card')
 
@@ -113,7 +98,7 @@ function displayForecast(data) {
         const cityHumidityEl = document.createElement('h5')
         //display the date
         const date = forecastDate(i)
-        console.log(data)
+        //console.log(data)
         const iconPath = data.list[0].weather[0].icon;
         const icon = weatherIcon(iconPath)
         //Adding the temperature, wind speed and humidity from the searched city
@@ -167,7 +152,7 @@ function get5DayForecast(city) {
             if (response.ok) {
                 response.json()
                     .then(function (data) {
-                        console.log(data)
+                        //console.log(data)
                         displayForecast(data)
                     })
             } else {
@@ -183,6 +168,7 @@ const pastCitiesArrayHandler = function (city) {
         return
     } else {
         pastCities.push(city)
+        console.log(pastCities);
     }
 }
 //Clears up the history in the 5 day forecast
@@ -192,15 +178,28 @@ const clearDiv = function () {
 }
 // Adding searched cities into the history
 const searchHistory = function () {
-    console.log('History')
+    //console.log('History')
     cityHistory.innerHTML = '';
-    for (const city of pastCities) {
-        historyCard = document.createElement('button')
+    pastCities.forEach (city =>  {
+        historyCard = document.createElement('li')
         historyCard.textContent = city
         historyCard.setAttribute('id', 'searchCard')
         historyCard.setAttribute('data-content', city)
         cityHistory.appendChild(historyCard)
-    }
+        historyCard.addEventListener('click', function (event){
+          event.preventDefault() 
+           if (event.target.matches('li')){
+            const pastCity = city;
+            console.log(pastCity, 'right here')
+            search(pastCity);
+            }
+            
+           
+        })
+    })
 }
 //Calls the history of past searched cities
+window.onload = ()=>{
 searchHistory();
+
+}

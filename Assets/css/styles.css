@@ -1,7 +1,7 @@
 * {
     box-sizing: border-box;
 }
-
+/* Proper */
 .header {
     display:flex;
     flex-direction: column;
@@ -11,7 +11,7 @@
     align-items: center;
     
 }
-
+/* Size of words for the website */
 h1 {
     display:flex;
     font-weight:bold;
@@ -50,6 +50,7 @@ h5 {
     border-style: solid;
     width: 75%;
 }
+
 
 .forecast {
     display: flex;
@@ -122,9 +123,19 @@ input {
     margin-top: 1rem;
 }
 
-.saved-cards {
+#searchHistory {
+    display:flex;
+    flex-direction: column;
     background-color: lavender;
-    padding: 3rem;
+    width:100%;
+
+}
+
+#searchCard {
+    background-color: lavender;
+    border:none;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 20px;
 }
 
 .hide {

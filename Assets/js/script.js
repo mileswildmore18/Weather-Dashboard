@@ -8,7 +8,9 @@ let city;
 let weatherElement = document.getElementById('currentWeather')
 const searchInput = document.getElementById('search');
 let forecastContainer = document.getElementById('forecastContainer')
-
+let pastCities = JSON.parse(localStorage.getItem('cities')) || [];
+let cityHistory = document.getElementById('searchHistory');
+//Provide the function for the search bar when the name of the city is typed in.
 const formSubmitHandler = function (event) {
     const city = searchInput.value
 
@@ -17,6 +19,7 @@ const formSubmitHandler = function (event) {
         
         searchInput.value = ''
     } else {
+        //Alert in case nothing is put in when the search button is clicked.
         alert('Please enter city')
     }
 };
@@ -34,20 +37,16 @@ function search(city) {
         .then(function (response) {
             //check to see that the city was found
             if (response.ok) {
-                // clearDiv();
-                // subtitleDisplay();
-                // pastCitiesArrayHandler(city);
-                // localStorage.setItem('cities',(JSON.stringify(pastCities)))
-                // searchList();
+                clearDiv();
+                pastCitiesArrayHandler(city);
+                localStorage.setItem('cities',(JSON.stringify(pastCities)))
+                searchHistory()
                 //parse the data
                 response.json()
                     .then(function (data) {
                         console.log(data)
                         displayWeather(data)
                         get5DayForecast(city)
-                        //send the data to the display function
-                        //displayWeather(data)
-                        //forecastSearch(city)
                     })
             } else {
                 //send error alert if response failed
@@ -79,7 +78,7 @@ const displayWeather = function (data) {
     weatherElement.appendChild(cityHumidityEl);
     
 }
-
+//Fetching response from the website while searching from the targeted website
 const forecastSearch = function (city) {
     const queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
 
@@ -101,7 +100,7 @@ const forecastSearch = function (city) {
         })
 
 }
-
+//Show the information of the forecast in the specific city
 function displayForecast(data) {
     for (let i = 1; i <= 5; i++) {
         const forecastCard = document.createElement('div')
@@ -117,14 +116,14 @@ function displayForecast(data) {
         console.log(data)
         const iconPath = data.list[0].weather[0].icon;
         const icon = weatherIcon(iconPath)
-
+//Adding the temperature, wind speed and humidity from the searched city
         cityDateEl.textContent = `${date}`;
         iconEl.textContent = icon;
         const cityTemp = (data.list[i].main.temp - 273.15) * (9 / 5) + 32;
         cityTempEl.textContent = ` Temp: ${cityTemp.toFixed(2)} F `;
         cityWindEl.textContent = ` Wind: ${data.list[i].wind.speed} MPH `;
         cityHumidityEl.textContent = ` Humidity ${data.list[i].main.humidity}% `;
-
+//Adding information into a list
         forecastCard.appendChild(cityDateEl);
         forecastCard.appendChild(iconEl);
         forecastCard.appendChild(cityTempEl);
@@ -133,13 +132,13 @@ function displayForecast(data) {
         forecastContainer.appendChild(forecastCard);
     }
 }
-
+//Provides today's date 
 const forecastDate = function (i) {
     let today = dayjs();
     let forecastDay = today.add(i, 'day').format('MM/DD/YYYY');
     return forecastDay;
 }
-
+//Providing specific weather icons for the weather condition in the specific city
 const weatherIcon = function (weatherIcon) {
     
     if (weatherIcon === '03d' || weatherIcon === '03n' || weatherIcon === '04d' || weatherIcon === '04n') {
@@ -160,7 +159,7 @@ const weatherIcon = function (weatherIcon) {
         return '?'
     }
 }
-
+//Adding 5 days of the forecast on a specific city searched
 function get5DayForecast(city) {
     let apiUrls = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
     fetch(apiUrls)
@@ -178,54 +177,29 @@ function get5DayForecast(city) {
         });
 }
 
-
-// Extract relevant weather information for the next 5 days
-//             const forecasts = data.list.filter((forecast, index) => index % 8 === 0); // Get forecasts for every 8th element (5-day forecast)
-
-//             // Update HTML elements with weather information
-//             const forecastContainer = document.getElementById('forecastContainer');
-//             forecasts.forEach(forecast => {
-//                 const date = new Date(forecast.dt * 1000); // Convert timestamp to date
-//                 const temperature = Math.round(forecast.main.temp - 273.15); // Convert from Kelvin to Celsius
-//                 const weatherDescription = forecast.weather[0].description;
-
-//                 // Create HTML elements to display forecast information
-//                 const forecastElement = document.createElement('div');
-//                 forecastElement.classList.add('forecast');
-//                 forecastElement.innerHTML = `
-//                     <p>Date: ${date.toDateString()}</p>
-//                     <p>Temperature: ${temperature}°C</p>
-//                     <p>Weather: ${weatherDescription}</p>
-//                 `;
-//                 forecastContainer.appendChild(forecastElement);
-
-//             });
-//         })
-//         .catch(error => {
-//             console.error('Error fetching weather data:', error);
-//             // Display error message on the website
-//             document.getElementById('weatherForecast').innerText = 'Error fetching weather data. Please try again later.';
-//         });
-//         //Call the get5DayForecast function to fetch and display the 5-day weather forecast when the page loads
-// window.onload = get5DayForecast;
-// }
-
+//Adding past cities from previous searches
+const pastCitiesArrayHandler = function(city){
+    if (pastCities.includes(city)){
+        return
+    } else{
+        pastCities.push(city)
+    }
+}
+//Clears up the history in the 5 day forecast
 const clearDiv = function () {
     weatherElement.innerHTML = ''
-    forecastElement.innerHTML = ''
+    forecastContainer.innerHTML = ''
 }
-
+// Adding searched cities into the history
 const searchHistory = function () {
-    searchHistoryElement.innerHTML = ''
+    console.log ('History')
+    cityHistory.innerHTML = '';
+    for(const city of pastCities) {
+    historyCard = document.createElement('button')
+    historyCard.textContent = city
+    historyCard.setAttribute('id', 'searchCard')
+    historyCard.setAttribute('data-content', city)
+    cityHistory.appendChild(historyCard)}
 }
-
-
-
-
-
-
-
-//Make the search bar activate on click and provide information if found or not.
-//Store the information that was founded into the localStorage.
-//L
-//Create a search bar for a city, zip code or country
+//Calls the history of past searched cities
+searchHistory();
